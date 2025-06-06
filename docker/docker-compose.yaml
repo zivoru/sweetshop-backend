@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres-sweetshop
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "sweetshop"
+    ports:
+      - "5477:5432"
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: pgAdmin-sweetshop
+    environment:
+      PGADMIN_DEFAULT_PASSWORD: "postgresmaster"
+      PGADMIN_DEFAULT_EMAIL: "swift2002999@gmail.com"
+    ports:
+      - "82:80"

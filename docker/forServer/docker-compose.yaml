@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: "CjofbyoPuzpg"
+      POSTGRES_PASSWORD: "!^*gi])Kv2Cr6(;HVw/on68WS"
+      POSTGRES_DB: "sweetshop"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # 2. Spring Boot бэкенд
+  backend:
+    image: zivoru/sweetshop-backend:1.0.0
+    container_name: backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://89.104.65.160:5432/sweetshop"
+      SPRING_DATASOURCE_USERNAME: "CjofbyoPuzpg"
+      SPRING_DATASOURCE_PASSWORD: "!^*gi])Kv2Cr6(;HVw/on68WS"
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  # 3. Первый React-сайт
+  frontend1:
+    image: zivoru/sweetshop-frontend:1.0.0
+    container_name: frontend
+    ports:
+      - "3001:81"
+    restart: unless-stopped
+
+  # 4. Второй React-сайт
+  frontend2:
+    image: zivoru/sweetshop-admin:1.0.0
+    container_name: frontend-admin
+    ports:
+      - "3002:82"  # Другой порт, чтобы не конфликтовал
+    restart: unless-stopped
+
+  # 5. pgAdmin (веб-интерфейс для PostgreSQL)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "swift2002999@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "K–?t)oM5]K#vb(/>lt!ucO&i."
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

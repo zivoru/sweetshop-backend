@@ -1,0 +1,26 @@
+{
+  "userId": 5,
+  "name": "Александр",
+  "phone": "+7 (434) 534-53-45",
+  "deliveryMethod": "courier",
+  "address": "Полевая 23",
+  "date": "",
+  "comment": "",
+  "paymentMethod": "CASH_ON_DELIVERY",
+  "cart": [
+    {
+      "id": 4,
+      "category": {
+        "id": 4,
+        "name": "Макарон"
+      },
+      "name": "Макарон фисташковый",
+      "description": "Хрустящее печенье с фисташковой начинкой",
+      "price": 95,
+      "weightGrams": 40,
+      "imageName": "product4.jpeg",
+      "quantity": 2
+    }
+  ],
+  "totalAmount": 190
+}
