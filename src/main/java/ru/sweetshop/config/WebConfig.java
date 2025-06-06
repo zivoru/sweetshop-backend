@@ -14,7 +14,9 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // разрешить на все эндпоинты
-                        .allowedOrigins("http://localhost:5173", "http://localhost:3001") // адрес твоего React-приложения
+                        .allowedOrigins(
+                                "http://localhost:5173", "http://localhost:3001",
+                                "http://89.104.65.160:8081", "http://89.104.65.160:8082") // адрес твоего React-приложения
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(false); // если нужны куки или заголовки авторизации
