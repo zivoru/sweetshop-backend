@@ -13,6 +13,7 @@ import ru.sweetshop.response.AddOrderResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -39,12 +40,12 @@ public class MainController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> products() {
-        return ResponseEntity.ok(productRepository.findAll());
+        return ResponseEntity.ok(productRepository.findAll(Sort.by(Sort.Direction.DESC, "id")));
     }
 
     @GetMapping("/products/{categoryId}")
     public ResponseEntity<List<Product>> productsByCategoryId(@PathVariable Long categoryId) {
-        return ResponseEntity.ok(productRepository.findAllByCategory_Id(categoryId));
+        return ResponseEntity.ok(productRepository.findAllByCategory_Id(categoryId, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     @GetMapping("/product/{id}")
@@ -56,10 +57,15 @@ public class MainController {
     public ResponseEntity<AddOrderResponse> addOrder(@RequestBody AddOrderRequest addOrderRequest) {
         Customer customer = new Customer(addOrderRequest.userId());
         if (addOrderRequest.userId() == null) {
-            Customer newCustomer = new Customer(null, addOrderRequest.name(),
-                    addOrderRequest.phone(), addOrderRequest.address(),
-                    true, LocalDateTime.now(), null, false, null);
-            customer = customerRepository.save(newCustomer);
+            Optional<Customer> byPhone = customerRepository.findByPhone(addOrderRequest.phone());
+            if (byPhone.isPresent()) {
+                customer = byPhone.get();
+            } else {
+                Customer newCustomer = new Customer(null, addOrderRequest.name(),
+                        addOrderRequest.phone(), addOrderRequest.address(),
+                        true, LocalDateTime.now(), null, false, null);
+                customer = customerRepository.save(newCustomer);
+            }
         }
 
         UUID uuid = UUID.randomUUID();
@@ -107,7 +113,7 @@ public class MainController {
     @GetMapping(value = "/orders-by-user/{userId}", produces = "application/json")
     public ResponseEntity<List<Order>> ordersByUser(@PathVariable Long userId) {
         Customer customer = customerRepository.findById(userId).get();
-        List<Order> orders = orderRepository.findAllByCustomer(customer);
+        List<Order> orders = orderRepository.findAllByCustomer(customer, Sort.by(Sort.Direction.DESC, "id"));
         return ResponseEntity.ok(orders);
     }
 

@@ -18,3 +18,8 @@ services:
       PGADMIN_DEFAULT_EMAIL: "swift2002999@gmail.com"
     ports:
       - "82:80"
+  adminer:
+    image: adminer
+    ports:
+      - "8085:8080"
+    restart: unless-stopped

@@ -36,10 +36,12 @@ public class AdminController {
 
     @PostMapping("/login")
     public ResponseEntity<Employee> login(@RequestBody LoginRequest loginRequest) {
-        Optional<Employee> byLoginAndPassword =
-                employeeRepository.findByLoginAndPassword(loginRequest.username(), loginRequest.password());
-        return byLoginAndPassword.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatusCode.valueOf(403)).build());
+        if ("admin".equals(loginRequest.username()) && "admin".equals(loginRequest.password())) {
+            Optional<Employee> employee = employeeRepository.findByLogin(loginRequest.username());
+            return employee.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.status(HttpStatusCode.valueOf(403)).build());
+        }
+        return ResponseEntity.status(HttpStatusCode.valueOf(403)).build();
     }
 
     @GetMapping("/categories")
