@@ -49,7 +49,7 @@ public class MainController {
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> products(@PathVariable Long id) {
+    public ResponseEntity<Product> product(@PathVariable Long id) {
         return ResponseEntity.ok(productRepository.findById(id).get());
     }
 
