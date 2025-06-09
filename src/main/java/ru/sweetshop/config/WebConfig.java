@@ -16,7 +16,10 @@ public class WebConfig {
                 registry.addMapping("/**") // разрешить на все эндпоинты
                         .allowedOrigins(
                                 "http://localhost:5173", "http://localhost:3001",
-                                "http://89.104.65.160:8081", "http://89.104.65.160:8082") // адрес твоего React-приложения
+                                "http://89.104.65.160:8081", "http://89.104.65.160:8082",
+                                "http://sweetshopp.ru", "http://admin.sweetshopp.ru",
+                                "https://sweetshopp.ru", "https://admin.sweetshopp.ru"
+                        ) // адрес твоего React-приложения
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(false); // если нужны куки или заголовки авторизации

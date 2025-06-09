@@ -17,7 +17,7 @@ services:
 
   # 2. Spring Boot бэкенд
   backend:
-    image: zivoru/sweetshop-backend:1.0.0
+    image: zivoru/sweetshop-backend:1.0.5
     container_name: backend
     depends_on:
       - postgres
@@ -31,29 +31,25 @@ services:
 
   # 3. Первый React-сайт
   frontend1:
-    image: zivoru/sweetshop-frontend:1.0.0
+    image: zivoru/sweetshop-frontend:1.0.2
     container_name: frontend
     ports:
-      - "3001:81"
+      - "8081:81"
     restart: unless-stopped
 
   # 4. Второй React-сайт
   frontend2:
-    image: zivoru/sweetshop-admin:1.0.0
+    image: zivoru/sweetshop-admin:1.0.1
     container_name: frontend-admin
     ports:
-      - "3002:82"  # Другой порт, чтобы не конфликтовал
+      - "8082:82"
     restart: unless-stopped
 
-  # 5. pgAdmin (веб-интерфейс для PostgreSQL)
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "swift2002999@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "K–?t)oM5]K#vb(/>lt!ucO&i."
+  # 5. adminer (веб-интерфейс для PostgreSQL)
+  adminer:
+    image: adminer
     ports:
-      - "5050:80"
+      - "8083:8080"
     restart: unless-stopped
 
 volumes:
